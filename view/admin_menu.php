@@ -36,6 +36,49 @@
         }
 
         fetch_data();
+        $(document).on('click', '#btn_add', function(){
+            var sno = $('#id').text();
+            var dish_name = $('#dish_name').text();
+            var image = $('#image').text();
+            var price = $('#price').text();
+
+            if(sno == '')
+            {
+                alert("Enter First Name");
+                return false;
+            }
+            if(dish_name == '')
+            {
+                alert("Enter Last Name");
+                return false;
+            }
+            if(image == '')
+            {
+                alert("Enter Last Name");
+                return false;
+            }
+            if(price == '')
+            {
+                alert("Enter Last Name");
+                return false;
+            }
+            $.ajax({
+                url:"../model/insert.php",
+                method:"POST",
+                data:{id:sno, dish_name:dish_name, image:image, price:price},
+                dataType:"text",
+                success:function(data)
+                {
+                    alert(data);
+                    fetch_data();
+                }
+            });
+        });
+
+
+
+
+
 
 
     });

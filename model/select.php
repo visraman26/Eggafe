@@ -1,7 +1,7 @@
 <?php
 include "../helper/connect.php";
 $output = '';
-$sql = "SELECT * FROM menu ORDER BY id DESC";
+$sql = "SELECT * FROM menu ORDER BY id ASC";
 $result = mysqli_query($connect, $sql);
 $output .= '  
       <div class="table-responsive">  
@@ -31,7 +31,7 @@ if (mysqli_num_rows($result) > 0) {
                 <td id="id" contenteditable> </td>  
                 <td id="dish_name" contenteditable></td>  
                 <td id="image" contenteditable></td>  
-                <td id="price_name" contenteditable></td>  
+                <td id="price" contenteditable></td>  
                 <td><button type="button" name="btn_add" id="btn_add" class="btn btn-xs btn-success">+ ADD DISH +</button></td>  
            </tr>  
       ';
