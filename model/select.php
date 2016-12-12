@@ -37,8 +37,18 @@ if (mysqli_num_rows($result) > 0) {
       ';
 } else {
     $output .= '<tr>  
-                          <td colspan="4">Data not Found</td>  
-                     </tr>';
+                          <td align="center" colspan="5">Data not Found</td>  
+                          
+                     </tr>
+                     <tr>  
+                <td id="id" contenteditable> </td>  
+                <td id="dish_name" contenteditable></td>  
+                <td id="image" contenteditable></td>  
+                <td id="price" contenteditable></td>  
+                <td><button type="button" name="btn_add" id="btn_add" class="btn btn-xs btn-success">+ ADD DISH +</button></td>  
+           </tr>  
+                     
+                     ';
 }
 $output .= '</table>  
       </div>';
