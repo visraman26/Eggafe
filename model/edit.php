@@ -5,7 +5,7 @@
  * Date: 12-Dec-16
  * Time: 12:26 PM
  */
-include "../helper/connect.php";
+include_once "../helper/connect.php";
 
 $id = $_POST["id"];
 $text = $_POST["text"];

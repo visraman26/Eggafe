@@ -1,5 +1,5 @@
 <?php
-include "../helper/connect.php";
+include_once "../helper/connect.php";
 $output = '';
 $sql = "SELECT * FROM menu ORDER BY id ASC";
 $result = mysqli_query($connect, $sql);
@@ -27,10 +27,30 @@ if (mysqli_num_rows($result) > 0) {
            ';
     }
     $output .= '  
-           <tr>  
+           <tr xmlns="http://www.w3.org/1999/html">  
                 <td id="id" contenteditable> </td>  
                 <td id="dish_name" contenteditable></td>  
-                <td id="image" contenteditable></td>  
+                <td id="image">
+                    <div  class="container-fluid">
+                    <div class="row">
+                        <div  class="col-sm-8">
+                            <div id="image_preview">
+                           
+                            </div>
+                        
+                        </div>
+                        <div class="col-sm-4">
+                            <form id="submit_form" action="../controller/uploadImg.php" method="post" enctype="multipart/form-data" >
+                                 <div class="form-group">
+                                        <input type="file" name="file" id="image_file" />
+                                 </div>
+                                 <input type="submit" name="upload_button" class="btn btn-info" value="Upload" />
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+    
+                </td>  
                 <td id="price" contenteditable></td>  
                 <td><button type="button" name="btn_add" id="btn_add" class="btn btn-xs btn-success">+ ADD DISH +</button></td>  
            </tr>  
@@ -43,17 +63,60 @@ if (mysqli_num_rows($result) > 0) {
                      <tr>  
                 <td id="id" contenteditable> </td>  
                 <td id="dish_name" contenteditable></td>  
-                <td id="image" contenteditable></td>  
+                <td id="image" ></td>  
                 <td id="price" contenteditable></td>  
                 <td><button type="button" name="btn_add" id="btn_add" class="btn btn-xs btn-success">+ ADD DISH +</button></td>  
            </tr>  
                      
                      ';
 }
+
 $output .= '</table>  
       </div>';
 echo $output;
 ?>
+<script>
+    $(document).ready(function () {
+
+        $('#submit_form').on('submit', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "../controller/uploadImg.php",
+                method: "POST",
+                data: new FormData(this),
+                contentType: false,
+                //cache:false,
+                processData: false,
+                success: function (data) {
+                    $('#image_preview').html(data);
+                    $('#image_file').val('');
+                }
+
+
+            });
+
+        });
+        $(document).on('click', '#remove_button', function () {
+            if (confirm("Are you sure you want to remove this image?")) {
+                var path = $('#remove_button').data("path");
+                $.ajax({
+                    url: "../controller/deleteImg.php",
+                    type: "POST",
+                    data: {path: path},
+                    success: function (data) {
+                        if (data != '') {
+                            $('#image_preview').html('');
+                        }
+                    }
+                });
+            }
+            else {
+                return false;
+            }
+        });
+
+    });
+</script>
 
 
 
