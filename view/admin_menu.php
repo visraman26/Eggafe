@@ -12,20 +12,10 @@
     <br/>
     <div class="table-responsive">
         <h3 align="center">Live Table Add Edit Delete using Ajax Jquery in PHP Mysql</h3><br/>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <tr>
-                    <th width="10%">S NO</th>
-                    <th width="25%">Dish Name</th>
-                    <th width="40%">Image</th>
-                    <th width="15%">Price</th>
-                    <th width="10%">Delete</th>
-                </tr>
+
                 <div id="live_data"></div>
 
-            </table>
 
-        </div>
 
 
     </div>
@@ -37,7 +27,7 @@
     $(document).ready(function () {
         function fetch_data() {
             $.ajax({
-                url: "select.php",
+                url: "../model/select.php",
                 method: "POST",
                 success: function (data) {
                     $('#live_data').html(data);
@@ -46,6 +36,8 @@
         }
 
         fetch_data();
+
+
     });
 
 </script>
