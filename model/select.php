@@ -20,53 +20,88 @@ if (mysqli_num_rows($result) > 0) {
                 <tr>  
                      <td class="idvalue" data-id1="' . $row["id"] . '" contenteditable>' . $row["id"] . '</td>  
                      <td class="dish_name" data-id2="' . $row["id"] . '" contenteditable>' . $row["dish_name"] . '</td>  
-                     <td class="image" data-id3="' . $row["id"] . '" contenteditable>' . $row["image"] . '</td>  
+                     <td class="image" data-id3="' . $row["id"] . '" >
+                      <div class="row">
+                         <div class="col-sm-10">       
+                             <img class="img-responsive" src="'.$row["image"].'" />  
+                         </div>  
+                         <div class="col-sm-2">  
+                               <button class="remove_image_btn btn btn-danger" data-path="'.$row["image"].'">X</button>
+                              
+                         </div>  
+                     </div>
+                            
+                     </td>  
                      <td class="price" data-id4="' . $row["id"] . '" contenteditable>' . $row["price"] . '</td>  
                      <td><button type="button" name="delete_btn" data-id5="' . $row["id"] . '" class="btn btn-xs btn-danger btn_delete">X REMOVE X</button></td>  
                 </tr>  
            ';
     }
     $output .= '  
-           <tr xmlns="http://www.w3.org/1999/html">  
-                <td id="id" contenteditable> </td>  
-                <td id="dish_name" contenteditable></td>  
-                <td id="image">
-                    <div  class="container-fluid">
-                    <div class="row">
-                        <div  class="col-sm-8">
-                            <div id="image_preview">
-                           
+                 <tr >  
+                        <td id="id" contenteditable> </td>  
+                        <td id="dish_name" contenteditable></td>  
+                        <td id="image">
+                            <div  class="container-fluid">
+                            <div class="row">
+                                <div  class="col-sm-8">
+                                    <div class="image_preview">
+                                   
+                                    </div>
+                                
+                                </div>
+                                <div class="col-sm-4">
+                                            <form class="uploadForm" action="../controller/uploadImg.php" method="post" enctype="multipart/form-data" >
+                                        
+                                                    <div id="uploadFormLayer">
+                                          
+                                                            <input name="userImage" type="file" class="inputFile" style="width:140px" />
+                                                            <input type="submit" value="Upload" class="btnSubmit btn btn-info" />
+                                                    </div>
+                                            </form>
+                                </div>
                             </div>
-                        
-                        </div>
-                        <div class="col-sm-4">
-                            <form id="submit_form" action="../controller/uploadImg.php" method="post" enctype="multipart/form-data" >
-                                 <div class="form-group">
-                                        <input type="file" name="file" id="image_file" />
-                                 </div>
-                                 <input type="submit" name="upload_button" class="btn btn-info" value="Upload" />
-                            </form>
-                        </div>
-                    </div>
-                    </div>
-    
-                </td>  
-                <td id="price" contenteditable></td>  
-                <td><button type="button" name="btn_add" id="btn_add" class="btn btn-xs btn-success">+ ADD DISH +</button></td>  
-           </tr>  
+                            </div>
+            
+                        </td>  
+                        <td id="price" contenteditable></td>  
+                        <td><button type="button" name="btn_add" id="btn_add" class="btn btn-xs btn-success">+ ADD DISH +</button></td>  
+                     </tr>  
       ';
 } else {
     $output .= '<tr>  
                           <td align="center" colspan="5">Data not Found</td>  
                           
                      </tr>
-                     <tr>  
-                <td id="id" contenteditable> </td>  
-                <td id="dish_name" contenteditable></td>  
-                <td id="image" ></td>  
-                <td id="price" contenteditable></td>  
-                <td><button type="button" name="btn_add" id="btn_add" class="btn btn-xs btn-success">+ ADD DISH +</button></td>  
-           </tr>  
+                    <tr >  
+                        <td id="id" contenteditable> </td>  
+                        <td id="dish_name" contenteditable></td>  
+                        <td id="image">
+                            <div  class="container-fluid">
+                            <div class="row">
+                                <div  class="col-sm-8">
+                                    <div class="image_preview">
+                                   
+                                    </div>
+                                
+                                </div>
+                                <div class="col-sm-4">
+                                            <form class="uploadForm" action="../controller/uploadImg.php" method="post" enctype="multipart/form-data" >
+                                        
+                                                    <div id="uploadFormLayer">
+                                          
+                                                            <input name="userImage" type="file" class="inputFile" style="width:140px"/>
+                                                            <input type="submit" value="Upload" class="btnSubmit btn btn-info" />
+                                                    </div>
+                                            </form>
+                                </div>
+                            </div>
+                            </div>
+            
+                        </td>  
+                        <td id="price" contenteditable></td>  
+                        <td><button type="button" name="btn_add" id="btn_add" class="btn btn-xs btn-success">+ ADD DISH +</button></td>  
+                     </tr>  
                      
                      ';
 }
@@ -76,36 +111,41 @@ $output .= '</table>
 echo $output;
 ?>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function (e) {
 
-        $('#submit_form').on('submit', function (e) {
+        $(".uploadForm").on('submit',(function(e) {
             e.preventDefault();
             $.ajax({
                 url: "../controller/uploadImg.php",
-                method: "POST",
-                data: new FormData(this),
+                type: "POST",
+                data:  new FormData(this),
                 contentType: false,
-                //cache:false,
-                processData: false,
-                success: function (data) {
-                    $('#image_preview').html(data);
-                    $('#image_file').val('');
+                cache: false,
+                processData:false,
+                success: function(data)
+                {
+                    $(".image_preview").html(data);
+                },
+                error: function()
+                {
                 }
-
-
             });
+        }));
 
-        });
-        $(document).on('click', '#remove_button', function () {
+
+      $(document).on('click', '.remove_image_btn', function () {
+            var $this=$(this);
             if (confirm("Are you sure you want to remove this image?")) {
-                var path = $('#remove_button').data("path");
+
+                var path = $this.data("path");
+
                 $.ajax({
                     url: "../controller/deleteImg.php",
                     type: "POST",
                     data: {path: path},
                     success: function (data) {
                         if (data != '') {
-                            $('#image_preview').html('');
+                            $(".image_preview").html(data);
                         }
                     }
                 });
@@ -114,6 +154,9 @@ echo $output;
                 return false;
             }
         });
+
+
+
 
     });
 </script>

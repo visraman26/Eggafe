@@ -39,7 +39,7 @@
 
             var sno = $('#id').text();
             var dish_name = $('#dish_name').text();
-            var image = $('#image').text();
+            var image = document.getElementById('imgDish').src;
             var price = $('#price').text();
 
 

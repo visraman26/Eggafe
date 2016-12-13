@@ -1,7 +1,7 @@
 <?php
 
-$file_name=$_FILES['file']['name'] ;
-$outputimg="";
+$file_name=$_FILES['userImage']['name'] ;
+
 if($file_name!= '')
 {
     $tmp = explode('.', $file_name);
@@ -12,17 +12,11 @@ if($file_name!= '')
     {
         $new_name = rand() . "." . $extension;
         $path = "../view/images/" . $new_name;
-        if(move_uploaded_file($_FILES['file']['tmp_name'], $path))
-        {
-            echo '  <div class="row">
-                         <div class="col-sm-10">       
-                              <img src="'.$path.'" class="img-responsive" />  
-                         </div>  
-                         <div class="col-sm-2">  
-                              <button type="button" data-path="'.$path.'" id="remove_button" class="btn btn-danger">x</button>  
-                         </div>  
-                     </div>
-                     ';
+        if(move_uploaded_file($_FILES['userImage']['tmp_name'], $path))
+        {?>
+            <img id="imgDish"src="<?php echo $path; ?>" width="140px" height="140px" />
+            <button class="remove_image_btn btn btn-danger" data-path="<?php echo $path; ?>">X</button>
+            <?php
         }
     }
     else
