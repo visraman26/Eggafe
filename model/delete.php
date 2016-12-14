@@ -18,11 +18,15 @@ if(mysqli_num_rows($result)>0) {
 $sql = "DELETE FROM menu WHERE id = '".$_POST["id"]."'";
 if(mysqli_query($connect, $sql))
 {
+    if($path!='')
+    {
     $final_path="";
     $pa=$path;
     $pa=substr($pa,strpos($pa, "/view"));
     $final_path .="..".$pa;
+
     unlink($final_path);
+    }
     echo 'Data Deleted';
 }
 ?>

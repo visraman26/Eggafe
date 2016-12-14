@@ -27,6 +27,8 @@ if (mysqli_num_rows($result) > 0) {
                          </div>  
                          <div class="col-sm-2">  
                                <button class="remove_image_btn btn btn-danger" data-path="'.$row["image"].'">X</button>
+                               
+                                 
                               
                          </div>  
                      </div>
@@ -54,8 +56,9 @@ if (mysqli_num_rows($result) > 0) {
                                             <form class="uploadForm" action="../controller/uploadImg.php" method="post" enctype="multipart/form-data" >
                                         
                                                     <div id="uploadFormLayer">
+                                                   <!-- <label for="files">Choose Image</label>-->
                                           
-                                                            <input name="userImage" type="file" class="inputFile" style="width:140px" />
+                                                            <input  name="userImage" type="file" class="inputFile" style="width:140px" />
                                                             <input type="submit" value="Upload" class="btnSubmit btn btn-info" />
                                                     </div>
                                             </form>
@@ -131,6 +134,9 @@ echo $output;
                 }
             });
         }));
+
+
+
 
 
       $(document).on('click', '.remove_image_btn', function () {
